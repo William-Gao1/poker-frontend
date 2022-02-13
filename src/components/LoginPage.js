@@ -9,6 +9,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import LoadingButton from '@mui/lab/LoadingButton'
 import PageWrapper from './PageWrapper';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { isLoggedIn, login } from '../services/auth';
@@ -28,9 +29,6 @@ const useStyles = makeStyles((theme) => ({
     form: {
         width: '100%', // Fix IE 11 issue.
         marginTop: theme.spacing(1),
-    },
-    submit: {
-        margin: theme.spacing(3, 0, 2),
     }
 }));
 
@@ -38,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
 export default function SignIn() {
     const classes = useStyles();
     const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
     const {state} = useLocation();
     const redirectURL = state?.from || '/';
     const navigate = useNavigate();
@@ -60,12 +59,14 @@ export default function SignIn() {
                 <form className={classes.form} noValidate onSubmit={async (e) => {
                     e.preventDefault();
                     try {
-                        await login(document.getElementById('email').value, document.getElementById('password').value);
+                        setLoading(true);
                         setError('');
+                        await login(document.getElementById('email').value, document.getElementById('password').value);
                         navigate(redirectURL)
                     } catch (e) {
                         setError('Invalid email or password please try again');
                     }
+                    setLoading(false)
                 }}>
                     <TextField
                         variant="outlined"
@@ -92,15 +93,16 @@ export default function SignIn() {
                     <Typography color="error">
                         {error}
                     </Typography>
-                    <Button
+                    <LoadingButton
                         type="submit"
                         fullWidth
                         variant="contained"
                         color="primary"
-                        className={classes.submit}
+                        className="loginFormSubmit"
+                        loading={loading}
                     >
                         Sign In
-                    </Button>
+                    </LoadingButton>
                     <Grid container>
                         <Grid item xs>
                             <Link href="#" variant="body2">
