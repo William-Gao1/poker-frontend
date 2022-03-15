@@ -8,7 +8,7 @@ class PageWrapper extends React.Component {
         return (
             <React.Fragment>
                 <Header loggedIn={loggedIn}/>
-                <div className="appContainer">
+                <div className={`appContainer ${this.props.pokerBackground ? 'pokerBackground' : ''}`}>
                     {this.props.children}
                 </div>
 

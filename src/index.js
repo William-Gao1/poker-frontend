@@ -8,7 +8,7 @@ import './styles/base.scss'
 
 ReactDOM.render(
   <Provider store={store}>
-    <AppRouter />
+      <AppRouter />
   </Provider>,
   document.getElementById('root'),
 );

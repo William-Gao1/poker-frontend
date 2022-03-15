@@ -2,7 +2,7 @@ import axios from '../api/axios';
 import store from '../redux/store';
 import { setUser } from '../redux/User/user.actions';
 
-export const login  = async (email, password) => {
+export const login = async (email, password) => {
     const response = await axios.post('/user/login', {
         email,
         password
@@ -11,27 +11,30 @@ export const login  = async (email, password) => {
     store.dispatch(setUser(response.data.user))
 }
 
-export const logout  = async () => {
+export const logout = async () => {
     document.cookie = `${process.env.REACT_APP_TOKEN_NAME}=; max-age=-1`
     store.dispatch(setUser(null));
-    
+
 }
 
 export const isLoggedIn = () => {
-    var dc = document.cookie;
-    var prefix = `${process.env.REACT_APP_TOKEN_NAME}=`;
-    var begin = dc.indexOf("; " + prefix);
-    if (begin === -1) {
-        begin = dc.indexOf(prefix);
-        if (begin !== 0) return false;
+    if (getToken()){
+        return true;
     }
-    else
-    {
-        begin += 2;
-        var end = document.cookie.indexOf(";", begin);
-        if (end === -1) {
-            end = dc.length;
+    return false;
+}
+
+export const getToken = () => {
+    const name = process.env.REACT_APP_TOKEN_NAME + "=";
+    let ca = document.cookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) === ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) === 0) {
+            return c.substring(name.length, c.length);
         }
     }
-    return true;
+    return null;
 }
