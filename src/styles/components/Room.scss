@@ -1,0 +1,30 @@
+.errorModal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400;
+    background-color: white;
+    border: 2px solid #000;
+    box-shadow: none;
+    outline: none;
+    padding: 2em;
+    display: flex;
+    flex-direction: column;
+}
+
+.bettingDisplay {
+    display: flex;
+    flex-direction: column;
+    top: 80%;
+    right: 5%;
+    position: fixed;
+
+    button {
+        width: 7em;
+    }
+}
+
+.bettingSlider {
+    display: flex;
+}

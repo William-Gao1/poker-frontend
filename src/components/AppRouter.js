@@ -6,6 +6,7 @@ import LandingPage from './LandingPage';
 import LoginPage from './LoginPage';
 import PageNotFound from './PageNotFound';
 import ProtectedRoute from './ProtectedRoute';
+import Room from './Room';
 
 const AppRouter = () => (
 
@@ -13,6 +14,7 @@ const AppRouter = () => (
         <Routes>
             <Route path="/" element={<ProtectedRoute/>}>
                 <Route path="/" element={<LandingPage/>} />
+                <Route path='/room/:activeId' element={<Room />} />
             </Route>
             <Route path='/login' element={<LoginPage/>} />
             <Route path="*" element={<PageNotFound/>} />

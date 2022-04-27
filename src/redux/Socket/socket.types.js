@@ -1,0 +1,3 @@
+export const CONNECT = "WEBSOCKET_CONNECT"
+export const JOIN_ROOM = "WEBSOCKET_JOIN_ROOM"
+export const LEAVE_ROOM = "WEBSOCKET_LEAVE_ROOM"

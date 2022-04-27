@@ -6,7 +6,7 @@ import { isLoggedIn, logout } from '../services/auth';
 import { setUser } from '../redux/User/user.actions';
 
 
-const ProtectedRoute =  ({ user, setUser }) => {
+const ProtectedRoute =  ({ user, setUser}) => {
     useEffect(() => {
         async function getUser() {
             try{
