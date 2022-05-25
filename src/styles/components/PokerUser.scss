@@ -2,11 +2,17 @@
     background-color: lightgrey;
     width: 7em;
     border-radius: 1em;
+    border-width: 2px;
     text-align: center;
     p {
         margin-bottom: 0;
         margin-top: 0;
     }
+}
+
+.currentTurn {
+    border-style: solid;
+    border-color: green;
 }
 
 .pokerChip {
@@ -19,7 +25,30 @@
     position: fixed;
 }
 
+.pokerUserCardContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .moneyInPot {
     margin: auto 0;
     padding-left: 0.2em;
+}
+
+.card {
+    width: 2em;
+    border-style: solid;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.userCardDisplay {
+    display: flex;
+}
+
+.potAmount {
+    margin: auto;
+    padding-left: 0.3em;
 }

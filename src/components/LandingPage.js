@@ -5,8 +5,7 @@ import PageWrapper from './PageWrapper'
 import Typography from '@material-ui/core/Typography';
 import { useNavigate } from 'react-router-dom'
 import { Input } from '@mui/material'
-import { connectSocket, joinRoom } from '../redux/Socket/socket.actions'
-
+import { connectSocket, createRoom, joinRoom } from '../redux/Socket/socket.actions'
 class LandingPage extends React.Component {
     constructor (props) {
         super(props)
@@ -25,51 +24,32 @@ class LandingPage extends React.Component {
         this.props.connectSocket();
     }
 
-    joinRoom = () => {
+    componentDidUpdate() {
+        if (this.props.roomId) {
+            this.props.navigate(`/room/${this.props.roomId}`)
+        }
+    }
+
+    joinRoom = async () => {
         if (!this.state.activeId) {
             return this.setState({error: 'Please provide a room code'})
         }
         try {
-            this.props.joinRoom(this.state.activeId)
-            this.props.navigate(`/room/${this.state.activeId}`)
+            await this.props.joinRoom(this.state.activeId)
         } catch (e) {
-            this.setState({error: e.message})
+            return this.setState({error: e.message})
         }
-        // if (this.socket.disconnected) {
-        //     this.socket.connect(process.env.REACT_APP_BACKEND_URL, {auth: {token: getToken()}})
-        // }
-        // if (this.socket.connected) {
-        //     this.socket.emit('join room', this.state.activeId, (data) => {
-        //         if (data.status !== 200) {
-        //             this.setState({error: data.message})
-        //         } else {
-        //             this.setState({joinRoom: true, players: data.players})
-        //         }
-        //     })
-        // } else {
-        //     this.setState({error: 'Could not establish connection with server'})
-        // }
     }
 
-    createRoom = () => {
+    createRoom = async () => {
         if (!this.state.bigBlind || !this.state.smallBlind) {
             return this.setState({error: 'Please provide all required fields'})
         }
-        // if (this.socket.disconnected) {
-        //     this.socket.connect(process.env.REACT_APP_BACKEND_URL, {auth: {token: getToken()}})
-        // }
-        // if (this.socket.connected) {
-        //     this.socket.emit('create room', {bigBlind: this.state.bigBlind, smallBlind: this.state.smallBlind}, (data) => {
-        //         if (data.status !== 201) {
-        //             console.log(data)
-        //             this.setState({error: data.message})
-        //         } else {
-        //             this.setState({joinRoom: true, activeId: data.active_id, players: data.players})
-        //         }
-        //     })
-        // } else {
-        //     this.setState({error: 'Could not establish connection with server'})
-        // }
+        try {
+             await this.props.createRoom(this.state.bigBlind, this.state.smallBlind)
+        } catch (e) {
+            return this.setState({error: e.message})
+        }
     }
 
     toggleDisplayCreateRoom = () => {
@@ -77,11 +57,6 @@ class LandingPage extends React.Component {
     }
 
     render() {
-        if (this.state.joinRoom) {
-            // this.props.setPlayers(this.players)
-            // return <Navigate to={`/room/${this.state.activeId}`} />
-        }
-
         const joinRoom = (
             <div>
                 <TextField required id="outlined-basic" label="Room Code" variant="outlined" size="small" onChange={(e) => this.setState({activeId: e.target.value})} />
@@ -95,7 +70,7 @@ class LandingPage extends React.Component {
 
         const createRoom = (
             <div>
-            <Input type="number"/>
+                <Input type="number"/>
                 <TextField required id="outlined-basic" label="Big Blind" variant="outlined" size="small" onChange={(e) => this.setState({bigBlind: e.target.value})} />
                 <TextField required id="outlined-basic" label="Small Blind" variant="outlined" size="small" onChange={(e) => this.setState({smallBlind: e.target.value})} />
                 <Button variant="contained" color="secondary" onClick={() => this.toggleDisplayCreateRoom()}>Back</Button>
@@ -124,13 +99,15 @@ const HOCRoom = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        username: state.user.username
+        username: state.user.username,
+        roomId: state.room.activeId
     }
 }
 
 const mapDispatchToProps = dispatch => ({
     connectSocket: () => dispatch(connectSocket()),
-    joinRoom: (activeId) => dispatch(joinRoom(activeId))
+    joinRoom: async (activeId) => await dispatch(joinRoom(activeId)),
+    createRoom: async (bigBlind, smallBlind) => await dispatch(createRoom(bigBlind, smallBlind))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(HOCRoom)

@@ -37,8 +37,8 @@ export default function ButtonAppBar({ loggedIn }) {
                         if (loggedIn) {
                             e.preventDefault();
                             await logout();
-                            navigate('/login');
                         }
+                        navigate('/login');
                     }}>{loggedIn ? 'Logout' : 'Login'}</Button>
                 </Toolbar>
             </AppBar>

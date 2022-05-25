@@ -36,7 +36,7 @@ export default function SignIn() {
     const classes = useStyles();
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
-    const {state} = useLocation();
+    const { state } = useLocation();
     const redirectURL = state?.from || '/';
     const navigate = useNavigate();
 
@@ -47,76 +47,78 @@ export default function SignIn() {
     return (
         <PageWrapper>
             <Container component="main" maxWidth="xs">
-            <CssBaseline />
-            <div className={classes.paper}>
-                <Avatar className={classes.avatar}>
-                    <LockOutlinedIcon />
-                </Avatar>
-                <Typography component="h1" variant="h5">
-                    Sign in
-                </Typography>
-                <form className={classes.form} noValidate onSubmit={async (e) => {
-                    e.preventDefault();
-                    try {
-                        setLoading(true);
-                        setError('');
-                        await login(document.getElementById('email').value, document.getElementById('password').value);
-                        navigate(redirectURL)
-                    } catch (e) {
-                        setError('Invalid email or password please try again');
-                    }
-                    setLoading(false)
-                }}>
-                    <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="email"
-                        label="Email Address"
-                        name="email"
-                        autoComplete="email"
-                        autoFocus
-                    />
-                    <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        name="password"
-                        label="Password"
-                        type="password"
-                        id="password"
-                        autoComplete="current-password"
-                    />
-                    <Typography color="error">
-                        {error}
+                <CssBaseline />
+                <div className={classes.paper}>
+                    <Avatar className={classes.avatar}>
+                        <LockOutlinedIcon />
+                    </Avatar>
+                    <Typography component="h1" variant="h5">
+                        Sign in
                     </Typography>
-                    <LoadingButton
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        className="loginFormSubmit"
-                        loading={loading}
-                    >
-                        Sign In
-                    </LoadingButton>
-                    <Grid container>
-                        <Grid item xs>
-                            <Link href="#" variant="body2">
-                                Forgot password?
-                            </Link>
+                    <form className={classes.form} noValidate onSubmit={async (e) => {
+                        e.preventDefault();
+                        try {
+                            setLoading(true);
+                            setError('');
+                            await login(document.getElementById('email').value, document.getElementById('password').value);
+                            navigate(redirectURL)
+                        } catch (e) {
+                            setError('Invalid email or password please try again');
+                        }
+                        setLoading(false)
+                    }}>
+                        <TextField
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="email"
+                            label="Email Address"
+                            name="email"
+                            autoComplete="email"
+                            autoFocus
+                        />
+                        <TextField
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            fullWidth
+                            name="password"
+                            label="Password"
+                            type="password"
+                            id="password"
+                            autoComplete="current-password"
+                        />
+                        <Typography color="error">
+                            {error}
+                        </Typography>
+                        <LoadingButton
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            className="loginFormSubmit"
+                            loading={loading}
+                        >
+                            Sign In
+                        </LoadingButton>
+                        <Grid container>
+                            {
+                                // <Grid item xs>
+                                //     <Link href="#" variant="body2">
+                                //         Forgot password?
+                                //     </Link>
+                                // </Grid>
+                            }
+                            <Grid item>
+                                <Link variant="body2" onClick={() => navigate('/signup')} style={{ cursor: 'pointer' }} >
+                                    Don't have an account? Click Here
+                                </Link>
+                            </Grid>
                         </Grid>
-                        <Grid item>
-                            <Link href="#" variant="body2">
-                                {"Don't have an account? Click Here"}
-                            </Link>
-                        </Grid>
-                    </Grid>
-                </form>
-            </div>
-        </Container>
-        </PageWrapper>    
+                    </form>
+                </div>
+            </Container>
+        </PageWrapper>
     );
 }

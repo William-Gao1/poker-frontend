@@ -1,0 +1,11 @@
+.errorPage {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 30vh;
+}
+
+.errorCode {
+    font-size: 5em;
+    margin: 0;
+}

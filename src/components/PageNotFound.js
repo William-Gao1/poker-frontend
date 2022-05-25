@@ -1,17 +1,19 @@
+import { Button } from '@material-ui/core'
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import AppBar from './AppBar'
 
 const PageNotFound = () => {
+    const navigate = useNavigate();
     return (
-        <div id="wrapper">
-            <AppBar/>
-            <img src="https://i.imgur.com/qIufhof.png" alt="Not found"/>
-            <div id="info">
-                <h3>This page could not be found</h3>
+        <React.Fragment>
+            <AppBar />
+            <div className="errorPage">
+                <p className="errorCode">404</p>
+                <p className="errorMessage">The page you were looking for could not be found</p>
+                <Button variant="outlined" color="primary" onClick={() => navigate('/')}>Homepage</Button>
             </div>
-            <Link to="/">Home</Link>
-        </div>
+        </React.Fragment>
     )
 }
 

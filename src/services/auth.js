@@ -11,6 +11,16 @@ export const login = async (email, password) => {
     store.dispatch(setUser(response.data.user))
 }
 
+export const createUser = async (username, email, password) => {
+    const response = await axios.post('/user', {
+        username,
+        email,
+        password
+    })
+    document.cookie = `${process.env.REACT_APP_TOKEN_NAME}=${response.data.token.token}; expires=${response.data.token.expiresAt}`;
+    store.dispatch(setUser(response.data.user))
+}
+
 export const logout = async () => {
     document.cookie = `${process.env.REACT_APP_TOKEN_NAME}=; max-age=-1`
     store.dispatch(setUser(null));

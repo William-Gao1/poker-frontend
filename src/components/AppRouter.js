@@ -1,12 +1,11 @@
 import React from 'react';
-//import LandingPage from './LandingPage';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import LandingPage from './LandingPage';
-//import NotFoundPage from './NotFoundPage';
 import LoginPage from './LoginPage';
 import PageNotFound from './PageNotFound';
 import ProtectedRoute from './ProtectedRoute';
 import Room from './Room';
+import SignUpPage from './SignUpPage';
 
 const AppRouter = () => (
 
@@ -17,6 +16,7 @@ const AppRouter = () => (
                 <Route path='/room/:activeId' element={<Room />} />
             </Route>
             <Route path='/login' element={<LoginPage/>} />
+            <Route path='/signup' element={<SignUpPage/>}/>
             <Route path="*" element={<PageNotFound/>} />
         </Routes>
     </BrowserRouter>

@@ -28,3 +28,38 @@
 .bettingSlider {
     display: flex;
 }
+
+.communityCards {
+    display: flex;
+    position: fixed;
+    top: calc(50% - 3em);
+    left: calc(50% - 10.5em);
+}
+
+.communityCard {
+    width: 3em;
+    border-style: solid;
+    text-align: center;
+    margin: 0.3em;
+}
+
+.potChipsImg {
+    width: 1.5em;
+    height: 1.5em;
+}
+
+.potContainer {
+    position: fixed;
+    top: calc(50% - 5em);
+    left: calc(50% - 4em);
+    display: flex;
+}
+
+.roomAlert {
+    width: 15em;
+}
+
+.showing {
+    opacity: 0;
+    transition: all 250ms linear 2s;
+}
